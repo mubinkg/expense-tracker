@@ -1,22 +1,11 @@
-"use client"
-
-import { useState } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { ExpenseChart } from "@/components/expense-chart"
 import { CategoryChart } from "@/components/category-chart"
-import { AddExpenseDialog } from "@/components/add-expense-dialog"
 import { TrendingDown, TrendingUp, Wallet, CreditCard, PlusCircle } from "lucide-react"
+import { Expense } from "@/types"
+import ExpenseDialog from "./expense-dialog"
 
-export interface Expense {
-  id: string
-  amount: number
-  category: string
-  description: string
-  date: string
-}
-
-const initialExpenses: Expense[] = [
+const expenses: Expense[] = [
   { id: "1", amount: 1250, category: "Housing", description: "Rent", date: "2025-10-01" },
   { id: "2", amount: 450, category: "Food", description: "Groceries", date: "2025-10-02" },
   { id: "3", amount: 80, category: "Transportation", description: "Gas", date: "2025-10-03" },
@@ -30,21 +19,9 @@ const initialExpenses: Expense[] = [
 ]
 
 export function ExpenseDashboard() {
-  const [expenses, setExpenses] = useState<Expense[]>(initialExpenses)
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-
   const totalExpenses = expenses.reduce((sum, expense) => sum + expense.amount, 0)
   const avgExpense = totalExpenses / expenses.length
   const thisMonthExpenses = expenses.filter((e) => e.date.startsWith("2025-10")).length
-
-  const handleAddExpense = (expense: Omit<Expense, "id">) => {
-    const newExpense = {
-      ...expense,
-      id: Date.now().toString(),
-    }
-    setExpenses([...expenses, newExpense])
-    setIsDialogOpen(false)
-  }
 
   return (
     <div className="container mx-auto p-4 md:p-8 max-w-7xl">
@@ -53,10 +30,7 @@ export function ExpenseDashboard() {
           <h1 className="text-4xl font-bold tracking-tight text-balance">Expense Tracker</h1>
           <p className="text-muted-foreground mt-2">Monitor your spending and stay on budget</p>
         </div>
-        <Button onClick={() => setIsDialogOpen(true)} size="lg" className="gap-2">
-          <PlusCircle className="h-5 w-5" />
-          Add Expense
-        </Button>
+        <ExpenseDialog/>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
@@ -149,8 +123,6 @@ export function ExpenseDashboard() {
           </div>
         </CardContent>
       </Card>
-
-      <AddExpenseDialog open={isDialogOpen} onOpenChange={setIsDialogOpen} onAddExpense={handleAddExpense} />
     </div>
   )
 }
