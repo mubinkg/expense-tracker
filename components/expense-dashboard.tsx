@@ -13,7 +13,7 @@ export async function ExpenseDashboard() {
   // const thisMonthExpenses = expenses.filter((e) => e.date.startsWith("2025-10")).length
 
   return (
-    <div className="container mx-auto p-4 md:p-8 max-w-7xl">
+    <div className="container mx-auto p-4 md:p-8">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
         <div>
           <h1 className="text-4xl font-bold tracking-tight text-balance">Expense Tracker</h1>
