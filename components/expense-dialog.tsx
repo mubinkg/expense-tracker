@@ -5,14 +5,15 @@ import { Button } from "./ui/button";
 import { PlusCircle } from "lucide-react";
 import { AddExpenseDialog } from "./add-expense-dialog";
 import { Expense } from "@/types";
+import { createExpense } from "@/actions/expense";
+import { useRouter } from "next/navigation";
 
 const ExpenseDialog = () => {
+  const router = useRouter()
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const handleAddExpense = (expense: Omit<Expense, "id">) => {
-    const newExpense = {
-      ...expense,
-      id: Date.now().toString(),
-    };
+  const handleAddExpense = async (expense: Omit<Expense, "id">) => {
+    await createExpense(expense)
+    router.refresh()
     setIsDialogOpen(false);
   };
   return (

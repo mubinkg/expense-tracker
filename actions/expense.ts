@@ -19,7 +19,7 @@ export async function getExpenseById(id: number): Promise<Expense | null> {
 }
 
 // CREATE expense
-export async function createExpense(expense: Expense): Promise<Expense> {
+export async function createExpense(expense: Omit<Expense, "id">): Promise<Expense> {
   const data = await sql`
     INSERT INTO expenses (amount, category, description, date)
     VALUES (${expense.amount}, ${expense.category}, ${expense.description}, ${expense.date})
