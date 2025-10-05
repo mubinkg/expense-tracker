@@ -44,7 +44,7 @@ export function AddExpenseDialog({ open, onOpenChange, onAddExpense }: AddExpens
     e.preventDefault()
     if (amount && category && description && date) {
       onAddExpense({
-        amount: Number.parseFloat(amount),
+        amount: amount,
         category,
         description,
         date,
