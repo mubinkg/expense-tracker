@@ -7,10 +7,8 @@ import { getExpenses } from "@/actions/expense"
 
 export async function ExpenseDashboard() {
   const expenses = await getExpenses()
-  console.log(expenses)
   const totalExpenses = expenses.reduce((sum, expense) => sum + parseInt(expense.amount), 0)
   const avgExpense = totalExpenses / expenses.length
-  // const thisMonthExpenses = expenses.filter((e) => e.date.startsWith("2025-10")).length
 
   return (
     <div className="container mx-auto p-4 md:p-8">
@@ -19,7 +17,7 @@ export async function ExpenseDashboard() {
           <h1 className="text-4xl font-bold tracking-tight text-balance">Expense Tracker</h1>
           <p className="text-muted-foreground mt-2">Monitor your spending and stay on budget</p>
         </div>
-        <ExpenseDialog/>
+        <ExpenseDialog />
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">

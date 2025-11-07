@@ -7,7 +7,12 @@ const sql = neon(process.env.DATABASE_URL!);
 
 // GET all expenses
 export async function getExpenses(): Promise<Expense[]> {
-  const data = await sql`SELECT * FROM expenses ORDER BY date DESC`;
+  const data = await sql`
+  SELECT *
+  FROM expenses
+  WHERE date_trunc('month', date) = date_trunc('month', CURRENT_DATE)
+  ORDER BY date DESC
+`;
   return data as Expense[];
 }
 
